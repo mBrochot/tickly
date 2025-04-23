@@ -1,11 +1,11 @@
 import { getUserSession } from '@/lib/auth'
 
-// Type du contexte tRPC
+// tRPC context type
 export type Context = {
   user: Awaited<ReturnType<typeof getUserSession>>
 }
 
-// Fonction de création du contexte (appelée à chaque requête tRPC)
+// create context function
 export async function createContext(): Promise<Context> {
  const user = await getUserSession()
   return { user }

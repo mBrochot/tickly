@@ -1,9 +1,9 @@
-import { router } from '@/server/api/trpc'
+import { t } from './trpc'
 import { ticklyRouter } from './routers/tickly'
 
-export const appRouter = router({
+export const appRouter = t.router({
   tickly: ticklyRouter,
-  // autres routers…
 })
 
 export type AppRouter = typeof appRouter
+

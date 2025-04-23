@@ -25,9 +25,12 @@ type TicklyType = {
 
 const NewTicklyModal = ({ open, onClose }: Props): ReactNode => {
   const { data: types = [] } = trpc.tickly.getTypes.useQuery<TicklyType[]>();
+
+  const utils = trpc.useUtils();
   const { mutate } = trpc.tickly.createTickly.useMutation({
     onSuccess: () => {
-      onClose(); // Fermer la modale
+      utils.tickly.getCurrentTicklys.invalidate();
+      onClose();
     },
   });
 
@@ -37,7 +40,6 @@ const NewTicklyModal = ({ open, onClose }: Props): ReactNode => {
         <DialogHeader>
           <DialogTitle>Créer un nouveau Tickly</DialogTitle>
         </DialogHeader>
-
         <div className='grid gap-2 mt-4'>
           {types.map(({ uuid, label, icon }) => {
             const LucideIcon =
