@@ -51,37 +51,45 @@ export const ticklyRouter = router({
   getCurrentTicklys: protectedProcedure.query(async ({ ctx }) => {
     const userId = ctx.user?.uid;
     if (!userId) throw new Error('unauthorized');
-
+console.log('🔍 Fetching tickly for user:', userId);
     const ticklySnap = await getDocs(
       query(collection(db, 'tickly'), where('user_id', '==', userId))
     );
-
+console.log(`📦 Found ${ticklySnap.size} tickly documents`);
     const result = await Promise.all(
       ticklySnap.docs.map(async (ticklyDoc) => {
-        const historySnap = await getDocs(
-          query(
+        try {
+          const historyRef = query(
             collection(db, 'history'),
             where('tickly_uuid', '==', ticklyDoc.id),
             where('is_current', '==', true)
-          )
-        );
+          );
 
-        if (historySnap.empty) return null;
+          const historySnap = await getDocs(historyRef);
 
-        const start_at = historySnap.docs[0].data().start_at;
-        const { type_uuid } = ticklyDoc.data();
+          if (historySnap.empty) {
+            console.log(`⚠️ No current history found for tickly: ${ticklyDoc.id}`);
+            return null;
+          }
+          
+          const start_at = historySnap.docs[0].data().start_at;
+          const { type_uuid } = ticklyDoc.data();
 
-        const ticklyTypeDoc = await getDoc(doc(db, 'tickly_types', type_uuid));
-        const icon = ticklyTypeDoc.exists() ? ticklyTypeDoc.data().icon : 'Circle';
+          const ticklyTypeDoc = await getDoc(doc(db, 'tickly_types', type_uuid));
+          const icon = ticklyTypeDoc.exists() ? ticklyTypeDoc.data().icon : 'Circle';
 
-        return {
-          id: ticklyDoc.id,
-          icon,
-          start_at: start_at.toDate(),
-        };
+          return {
+            id: ticklyDoc.id,
+            icon,
+            start_at: start_at.toDate(),
+          }
+        } catch (error) {
+        console.error(`💥 Error processing tickly ${ticklyDoc.id}:`, error);
+        return null;
+      }
       })
     );
 
-    return result.filter(Boolean);
+    return result.filter(Boolean).sort((a, b) => b!.start_at.getTime() - a!.start_at.getTime());
   }),
 })

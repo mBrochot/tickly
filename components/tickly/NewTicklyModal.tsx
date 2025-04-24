@@ -36,7 +36,7 @@ const NewTicklyModal = ({ open, onClose }: Props): ReactNode => {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className='sm:max-w-xs'>
         <DialogHeader>
           <DialogTitle>Créer un nouveau Tickly</DialogTitle>
         </DialogHeader>
@@ -49,7 +49,8 @@ const NewTicklyModal = ({ open, onClose }: Props): ReactNode => {
               <Button
                 key={uuid}
                 variant='outline'
-                className='gap-2 justify-start'
+                size='lg'
+                className='gap-2 justify-start cursor-pointer'
                 onClick={() =>
                   mutate({
                     ticklyTypeUuid: uuid,

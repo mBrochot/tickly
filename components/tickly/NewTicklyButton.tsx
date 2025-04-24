@@ -9,7 +9,7 @@ type Props = {
 
 const NewTicklyButton = ({ onClick }: Props) => {
   return (
-    <Button onClick={onClick} variant='outline' className='cursor-pointer'>
+    <Button onClick={onClick} variant='outline' className='cursor-pointer w-40'>
       <CirclePlus className='w-4 h-4' />
       New Tickly
     </Button>

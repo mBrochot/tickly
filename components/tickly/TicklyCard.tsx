@@ -32,7 +32,7 @@ const TicklyCard = ({ icon, id, start_at }: Props): ReactNode => {
 
   const timeDisplay =
     days >= 1
-      ? `${days} jour${days > 1 ? 's' : ''}`
+      ? `${days} day${days > 1 ? 's' : ''}`
       : `${hours}:${minutes.toString().padStart(2, '0')}`;
 
   return (
@@ -43,8 +43,9 @@ const TicklyCard = ({ icon, id, start_at }: Props): ReactNode => {
       <div className='h-16 w-16 flex items-center justify-center rounded-md bg-secondary mr-4'>
         <Icon className='w-10 h-10 text-primary' />
       </div>
-      <div className='flex'>
-        <span className='text-lg font-medium'>{timeDisplay}</span>
+      <div className='flex flex-col'>
+        <span className='text-xs font-medium'>since</span>
+        <span className='text-lg font-bold'>{timeDisplay}</span>
       </div>
     </Card>
   );

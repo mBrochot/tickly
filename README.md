@@ -2,6 +2,12 @@
 
 Tickly est une application Next.js pour créer et suivre des "ticklys" — des marqueurs temporels associés à une activité (ex : Fast food, Sport, Movie).
 
+## Projet en cours de développement 🚧
+
+---
+
+Développement des fonctionnalités en premier. Le style viendra après.
+
 ## ⚙️ Stack
 
 - Next.js 15 (App Router)
@@ -20,5 +26,3 @@ Tickly est une application Next.js pour créer et suivre des "ticklys" — des m
 - Interface stylée avec Tailwind + shadcn
 
 ---
-
-Projet en cours de développement 🚧

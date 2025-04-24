@@ -22,7 +22,7 @@ const LogoutButton = (): ReactNode => {
     <Button
       variant='destructive'
       onClick={handleLogout}
-      className='cursor-pointer'
+      className='cursor-pointer w-40'
     >
       Déconnexion
     </Button>
